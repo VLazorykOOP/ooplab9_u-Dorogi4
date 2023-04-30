@@ -1,20 +1,37 @@
-﻿// OOPLab9T.cpp : Этот файл содержит функцию "main". Здесь начинается и заканчивается выполнение программы.
-//
+﻿#include <iostream>
+#include <fstream>
+#include <vector>
+#include <map>
 
-#include <iostream>
+using namespace std;
 
-int main()
-{
-    std::cout << "Lab №9. STL. \n";
+int main() {
+    string filename = "data.txt"; // имя файла с исходными данными
+    ifstream input(filename); // открытие файла для чтения
+
+    int year, month, duration, client_code;
+    map<int, int> yearly_duration;
+
+    // чтение данных из файла и вычисление суммарной продолжительности занятий по годам
+    while (input >> year >> month >> duration >> client_code) {
+        yearly_duration[year] += duration;
+    }
+
+    // поиск года с максимальной суммарной продолжительностью занятий
+    int max_year = 0;
+    int max_duration = 0;
+    for (const auto& [year, duration] : yearly_duration) {
+        if (duration > max_duration) {
+            max_year = year;
+            max_duration = duration;
+        }
+    }
+
+    // вывод результата
+    cout << "Year with the highest total duration: " << max_year << endl;
+    cout << "Total duration: " << max_duration << " hours" << endl;
+
+    input.close(); // закрытие файла
+
+    return 0;
 }
-
-// Запуск программы: CTRL+F5 или меню "Отладка" > "Запуск без отладки"
-// Отладка программы: F5 или меню "Отладка" > "Запустить отладку"
-
-// Советы по началу работы 
-//   1. В окне обозревателя решений можно добавлять файлы и управлять ими.
-//   2. В окне Team Explorer можно подключиться к системе управления версиями.
-//   3. В окне "Выходные данные" можно просматривать выходные данные сборки и другие сообщения.
-//   4. В окне "Список ошибок" можно просматривать ошибки.
-//   5. Последовательно выберите пункты меню "Проект" > "Добавить новый элемент", чтобы создать файлы кода, или "Проект" > "Добавить существующий элемент", чтобы добавить в проект существующие файлы кода.
-//   6. Чтобы снова открыть этот проект позже, выберите пункты меню "Файл" > "Открыть" > "Проект" и выберите SLN-файл.
